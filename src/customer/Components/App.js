@@ -53,23 +53,29 @@ export function App() {
   React.useEffect(() => {
     const handleScroll = () => {
       const headerBottom = headerRef?.current?.getBoundingClientRect().bottom;
+
       if (headerBottom < 0 && window.innerWidth >= 900) {
-        searchBoxRef.current.style.position = "fixed";
-        searchBoxRef.current.style.top = "65px";
-        // searchBoxRef.current.style.left = "0";
-        // searchBoxRef.current.style.width = "100%";
-        // searchBoxRef.current.style.zIndex = "1000";
-        // searchBoxRef.current.style.background = "#fbc300";
-        searchBoxRef.current.style.boxShadow = "0 4px 4px rgba(0, 0, 0, 0.1)";
-        searchBoxRef.current.style.padding = "0.5rem 1rem";
-        searchBoxRef.current.style.transition = "transform 0.3s ease-in-out";
+        if (searchBoxRef.current) {
+          searchBoxRef.current.style.position = "fixed";
+          searchBoxRef.current.style.top = "65px";
+          // searchBoxRef.current.style.left = "0";
+          // searchBoxRef.current.style.width = "100%";
+          // searchBoxRef.current.style.zIndex = "1000";
+          // searchBoxRef.current.style.background = "#fbc300";
+          searchBoxRef.current.style.boxShadow = "0 4px 4px rgba(0, 0, 0, 0.1)";
+          searchBoxRef.current.style.padding = "0.5rem 1rem";
+          searchBoxRef.current.style.transition = "transform 0.3s ease-in-out";
+        }
       } else {
-        searchBoxRef.current.style.position = "static";
-        searchBoxRef.current.style.boxShadow = "none";
+        if (searchBoxRef.current) {
+          searchBoxRef.current.style.position = "static";
+          searchBoxRef.current.style.boxShadow = "none";
+        }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -140,6 +146,9 @@ export function App() {
                   </div>
                 </div>
                 <div className="container-body">
+                  <Panel header="Price">
+                    <PriceSlider attribute="variants.priceWithTax" />
+                  </Panel>
                   <Panel header="Refinement Options">
                     <RefinementList attribute="optionGroups.options.name" />
                   </Panel>
@@ -160,9 +169,7 @@ export function App() {
                     ]}
                   />
                 </Panel> */}
-                  <Panel header="Price">
-                    <PriceSlider attribute="variants.priceWithTax" />
-                  </Panel>
+
                   {/* <Panel header="Ratings">
                   <Ratings attribute="rating" />
                 </Panel> */}
